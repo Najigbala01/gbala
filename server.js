@@ -28,3 +28,24 @@ app.post('/checkout', (req, res) => {
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
 });
+
+const express = require('express');
+const mongoose = require('mongoose');
+const authRoutes = require('./routes/auth');
+
+const app = express();
+
+mongoose.connect('mongodb://localhost:27017/gbala_investments', { useNewUrlParser: true, useUnifiedTopology: true });
+
+app.use(express.json());
+
+app.use('/auth', authRoutes);
+
+app.get('/protected', auth, (req, res) => {
+    res.send('This is a protected route');
+});
+
+app.listen(3000, () => {
+    console.log('Server running on http://localhost:3000');
+});
+
